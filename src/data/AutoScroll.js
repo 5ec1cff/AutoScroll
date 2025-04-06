@@ -109,44 +109,11 @@ chrome.storage.local.get(defaults, function (options) {
                    : htmlNode)
 
   // The timer that does the actual scrolling; must be very fast so that the scrolling is smooth
-  function startCycle(elem, scroller, root) {
-    // This is needed to support SVG
-    var scrollX = (root ? window.scrollX : scroller.scrollLeft)
-      , scrollY = (root ? window.scrollY : scroller.scrollTop)
-
+  function startCycle(elem, scroller) {
     function loop() {
       state.timeout = requestAnimationFrame(loop)
 
-      var scrollWidth  = scroller.scrollWidth  - elem.clientWidth
-        , scrollHeight = scroller.scrollHeight - elem.clientHeight
-
-      scrollX += state.dirX
-      scrollY += state.dirY
-
-      if (scrollX < 0) {
-        scrollX = 0
-
-      } else if (scrollX > scrollWidth) {
-        scrollX = scrollWidth
-      }
-
-      if (scrollY < 0) {
-        scrollY = 0
-
-      } else if (scrollY > scrollHeight) {
-        scrollY = scrollHeight
-      }
-
-      // This is needed to support SVG
-      if (root) {
-        // This triggers a reflow
-        window.scroll(scrollX, scrollY);
-
-      } else {
-        // This triggers a reflow
-        scroller.scrollLeft = scrollX
-        scroller.scrollTop  = scrollY
-      }
+      scroller.scrollBy({left: state.dirX, top: state.dirY, behavior: 'instant' })
     }
 
     loop();
@@ -281,7 +248,7 @@ chrome.storage.local.get(defaults, function (options) {
     state.oldX = x
     state.oldY = y
 
-    startCycle(o.element, o.scroller, o.root)
+    startCycle(o.element, o.scroller)
 
     addEventListener("wheel", mousewheel, true)
     addEventListener("mousemove", mousemove, true)
@@ -400,7 +367,6 @@ chrome.storage.local.get(defaults, function (options) {
         scroller: scroller,
         width:    width,
         height:   height,
-        root:     true
       };
 
     } else {
@@ -423,7 +389,6 @@ chrome.storage.local.get(defaults, function (options) {
         scroller: elem,
         width:    width,
         height:   height,
-        root:     false
       }
 
     } else {
