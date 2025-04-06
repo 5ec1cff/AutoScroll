@@ -156,8 +156,7 @@ chrome.storage.local.get(defaults, function (options) {
   shadow.appendChild(inner)
 
   function mousewheel(event) {
-    // TODO is this a good idea ?
-    stopEvent(event, true)
+    unclick()
   }
 
   function mousemove(event) {
