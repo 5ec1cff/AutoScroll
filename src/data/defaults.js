@@ -1,7 +1,7 @@
 "use strict";
 
 var defaults = {
-  dragThreshold: 10,
+  dragThreshold: 0,
   moveThreshold: 10,
   moveSpeed: 10,
   stickyScroll: true,

@@ -121,7 +121,7 @@ chrome.storage.local.get(defaults, function (options) {
 
 
   function shouldSticky(x, y) {
-    return options["stickyScroll"] && /*state.stickyScroll && */math.hypot(x, y) < options["dragThreshold"]
+    return options["stickyScroll"] && (options["dragThreshold"] <= 0 || /*state.stickyScroll && */math.hypot(x, y) < options["dragThreshold"])
   }
 
   function scale(value) {

@@ -71,7 +71,7 @@ require(["lib/chrome-extension/options", "lib/util/cell", "lib/util/ui"], functi
             set: min0
           })
 
-          e.addText(" pixels")
+          e.addText(" pixels (0 means Infinity)")
         }).move(e)
 
         options.separator(e)
